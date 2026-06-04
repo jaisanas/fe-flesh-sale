@@ -42,12 +42,12 @@ The app is served at **http://localhost:5173**. Vite hot-reloads on file changes
 
 ### Available scripts
 
-| Command          | Description                                  |
-| ---------------- | -------------------------------------------- |
-| `npm run dev`    | Start Vite dev server with HMR on port 5173  |
-| `npm run build`  | Type-check (`tsc -b`) and build to `dist/`   |
-| `npm run preview`| Serve the production build locally on 4173   |
-| `npm run lint`   | Run ESLint over the project                  |
+| Command           | Description                                 |
+| ----------------- | ------------------------------------------- |
+| `npm run dev`     | Start Vite dev server with HMR on port 5173 |
+| `npm run build`   | Type-check (`tsc -b`) and build to `dist/`  |
+| `npm run preview` | Serve the production build locally on 4173  |
+| `npm run lint`    | Run ESLint over the project                 |
 
 ---
 
@@ -57,9 +57,9 @@ All runtime config is driven by Vite environment variables, which are **inlined 
 
 ### Environment variables
 
-| Variable             | Required | Default                  | Description                                  |
-| -------------------- | -------- | ------------------------ | -------------------------------------------- |
-| `VITE_API_BASE_URL`  | No       | `http://localhost:3000`  | Base URL of the flash-sale backend API       |
+| Variable            | Required | Default                 | Description                            |
+| ------------------- | -------- | ----------------------- | -------------------------------------- |
+| `VITE_API_BASE_URL` | No       | `http://localhost:3000` | Base URL of the flash-sale backend API |
 
 ### Local dev
 
@@ -80,7 +80,7 @@ Pass it as a Docker build arg (see [Docker](#docker) below).
 A few endpoints expect a static dev token. It lives in [`src/config.ts`](src/config.ts):
 
 ```ts
-export const STATIC_DEV_TOKEN = 'static-dev-token';
+export const STATIC_DEV_TOKEN = "static-dev-token";
 ```
 
 This token is sent on `POST /users` (register) and `GET /flash-sale-products` requests. Authenticated endpoints (`/orders`) use the per-user access token saved at login time, attached automatically by the axios interceptor in [`src/api/client.ts`](src/api/client.ts).
@@ -93,16 +93,16 @@ Tokens are stored in `localStorage` under the keys `accessToken` and `refreshTok
 
 The app expects the following endpoints from the backend at `VITE_API_BASE_URL`:
 
-| Method | Path                                  | Auth header                        | Body                                       | Used by                |
-| ------ | ------------------------------------- | ---------------------------------- | ------------------------------------------ | ---------------------- |
-| POST   | `/users`                              | `Bearer static-dev-token`          | `{ username, password }`                   | Register page          |
-| POST   | `/users/login`                        | _none_                             | `{ username, password }`                   | Login page             |
-| GET    | `/flash-sale-products?active=true`    | `Bearer static-dev-token`          | —                                          | Active deals on Home   |
-| GET    | `/flash-sale-products?upcoming=true`  | `Bearer static-dev-token`          | —                                          | Upcoming deals on Home |
-| POST   | `/orders`                             | `Bearer <accessToken>`             | `{ flashSaleProductId }`                   | Buy Now button         |
-| GET    | `/orders`                             | `Bearer <accessToken>`             | —                                          | My Orders page         |
-| GET    | `/orders/:id`                         | `Bearer <accessToken>`             | —                                          | Order detail / Payment |
-| PATCH  | `/orders/:id`                         | `Bearer <accessToken>`             | `{ status: "paid" \| "cancelled" }`        | Payment page           |
+| Method | Path                                 | Auth header               | Body                                | Used by                |
+| ------ | ------------------------------------ | ------------------------- | ----------------------------------- | ---------------------- |
+| POST   | `/users`                             | `Bearer static-dev-token` | `{ username, password }`            | Register page          |
+| POST   | `/users/login`                       | _none_                    | `{ username, password }`            | Login page             |
+| GET    | `/flash-sale-products?active=true`   | `Bearer static-dev-token` | —                                   | Active deals on Home   |
+| GET    | `/flash-sale-products?upcoming=true` | `Bearer static-dev-token` | —                                   | Upcoming deals on Home |
+| POST   | `/orders`                            | `Bearer <accessToken>`    | `{ flashSaleProductId }`            | Buy Now button         |
+| GET    | `/orders`                            | `Bearer <accessToken>`    | —                                   | My Orders page         |
+| GET    | `/orders/:id`                        | `Bearer <accessToken>`    | —                                   | Order detail / Payment |
+| PATCH  | `/orders/:id`                        | `Bearer <accessToken>`    | `{ status: "paid" \| "cancelled" }` | Payment page           |
 
 ### Expected response shapes
 
@@ -111,7 +111,7 @@ The app expects the following endpoints from the backend at `VITE_API_BASE_URL`:
 ```jsonc
 {
   "accessToken": "eyJ…",
-  "refreshToken": "eyJ…"
+  "refreshToken": "eyJ…",
 }
 ```
 
@@ -127,10 +127,10 @@ Snake-case variants (`access_token` / `refresh_token`) are also accepted.
   "stock": 0,
   "price": "10.00",
   "start_date": "2026-06-03T00:00:00.000Z",
-  "end_date":   "2026-06-04T00:00:00.000Z",
+  "end_date": "2026-06-04T00:00:00.000Z",
   "cached_stock": 0,
   "is_active": true,
-  "is_upcoming": false
+  "is_upcoming": false,
 }
 ```
 
@@ -148,7 +148,7 @@ The UI uses `product_name`, parses `price` (string) as float and renders it as R
   "price": "10.00",
   "status": "created",
   "created_at": "2026-06-03T15:06:49.161Z",
-  "updated_at": "2026-06-03T15:06:49.161Z"
+  "updated_at": "2026-06-03T15:06:49.161Z",
 }
 ```
 
@@ -262,15 +262,15 @@ src/
 
 ## Routes
 
-| Path                          | Auth required | Page                |
-| ----------------------------- | ------------- | ------------------- |
-| `/login`                      | No            | LoginPage           |
-| `/register`                   | No            | RegisterPage        |
-| `/`                           | Yes           | HomePage (deals)    |
-| `/orders`                     | Yes           | OrdersPage          |
-| `/orders/:orderId`            | Yes           | OrderDetailPage     |
-| `/orders/:orderId/payment`    | Yes           | PaymentPage         |
-| anything else                 | —             | Redirects to `/`    |
+| Path                       | Auth required | Page             |
+| -------------------------- | ------------- | ---------------- |
+| `/login`                   | No            | LoginPage        |
+| `/register`                | No            | RegisterPage     |
+| `/`                        | Yes           | HomePage (deals) |
+| `/orders`                  | Yes           | OrdersPage       |
+| `/orders/:orderId`         | Yes           | OrderDetailPage  |
+| `/orders/:orderId/payment` | Yes           | PaymentPage      |
+| anything else              | —             | Redirects to `/` |
 
 ---
 
@@ -283,6 +283,18 @@ src/
 **Stock/price not showing for products** — verify the API returns `product_name`, `price` (string is fine), and `stock` on the flash-sale product objects. The UI is keyed off those exact field names.
 
 **Docker container 404s on a deep link refresh** — the bundled `nginx.conf` already includes the SPA fallback. If you swap in a different reverse proxy, make sure unknown paths fall back to `index.html`.
+
+---
+
+## Additional Resources
+
+For detailed setup and deployment instructions for the backend service, please visit the backend repository:
+
+- Backend Repository: https://github.com/jaisanas/be-flesh-sale
+
+Additionally, a walkthrough video demonstrating the system architecture and the communication flow between the frontend and backend services is available here:
+
+- System Walkthrough Video: https://drive.google.com/file/d/1h_hg97l9VC9MPoN9snwHo61K_NWf_OGv/view?usp=sharing
 
 ---
 
